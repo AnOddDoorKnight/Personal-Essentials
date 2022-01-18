@@ -11,7 +11,6 @@ public static class Algebra
 		else if (input > max) return max;
 		else return input;
 	}
-
 	public static bool HealthManager(ref double value, in double maxHealth, in double deathPoint = 0)
 	{
 		if (value <= deathPoint)

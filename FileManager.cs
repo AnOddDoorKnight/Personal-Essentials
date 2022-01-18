@@ -1,71 +1,48 @@
 ﻿using System.IO;
 using System;
 namespace OddsLibrary.IO;
-public static class FileManager
+public class FileManager
 {
-	public static void DirectoryBuilder(string fileSpecification) //c:\Documents\My Games\ASimpleGame\Saves\
+	public readonly bool isFile;
+	public readonly string filePath;
+	public readonly string[] directories;
+	public FileManager(string filePath, bool isFile = false)
 	{
-		string[] directories = RemoveLingeringSlashes(fileSpecification).Split(@"\");
+		this.isFile = isFile;
+		this.filePath = filePath;
+		directories = RemoveLingeringSlashes(filePath).Split(@"\");
+	}
+	public bool ReadFile(bool buildFileIfDoesntExist)
+	{
+		if (!isFile) throw new ArgumentException("This is for files only!");
+		if (File.Exists(fileLocation)) return true;
+		else if (!buildFileIfDoesntExist) return false;
+		BuildFile();
+		File.Create($@"{directory}\{fileFolderNames[^1]}");
+		return true;
+	}
+	public Task BuildPath()
+	{
 		string forEachLine = "";
 		for (int i = 0; i < directories.Length; i++)
 		{
 			if (!Directory.Exists(forEachLine + directories[i]))
-			{
 				Directory.CreateDirectory(forEachLine + directories[i]);
-			}
 			forEachLine += directories[i] + @"\";
 		}
+		return Task.CompletedTask;
 	}
-	public static void BuildForFile(string fileLocation)
+	public Task BuildFile()
 	{
-		string[] fileFolderNames = RemoveLingeringSlashes(fileLocation).Split(@"\");
-		if (File.Exists(fileLocation)) return;
-		// Gets the folders before the file itself
-		string directory = "";
+		if (!isFile) throw new ArgumentException("This is for files only!");
+		if (File.Exists(filePath)) return Task.CompletedTask;
+		string directoryForFile = "";
 		for (int i = 0; i < fileFolderNames.Length - 1; i++)
-			directory += $@"{fileFolderNames[i]}\"; 
-		directory = RemoveLingeringSlashes(directory);
-		// Directory exists, but not file
-		if (Directory.Exists(directory))
-		{ 
-			File.Create($@"{directory}\{fileFolderNames[^1]}"); 
-			return; 
-		}
-		// Neither Exists
-		DirectoryBuilder(directory);
+			directory += $@"{fileFolderNames[i]}\";
+		if (!Directory.Exists(directoryForFile)) BuildPath();
 		File.Create($@"{directory}\{fileFolderNames[^1]}");
+		return Task.CompletedTask;
 	}
-	// This needs debugging, might not work
-	public static void GetFile(string fileLocation)
-    {
-		string[] fileFolderNames = RemoveLingeringSlashes(fileLocation).Split(@"\");
-		if (File.Exists(fileLocation)) //File Save 
-		{
-			Console.WriteLine("File Retrieved!");
-		}
-		else
-        {
-			//Input going to directory
-			string directory = "";
-			for (int i = 0; i < fileFolderNames.Length - 1; i++)
-				directory += $@"{fileFolderNames[i]}\"; 
-			directory = RemoveLingeringSlashes(directory);
-			if (Directory.Exists(directory))
-            {
-				Console.WriteLine("Save File does not exist, building..");
-				File.Create($@"{directory}\{fileFolderNames[^1]}"); //Directory Exists
-				Console.WriteLine("Built!");
-			}
-			else //Neither exists
-			{
-				Console.WriteLine("Directory does not exist, building..");
-				DirectoryBuilder(directory);
-				File.Create($@"{directory}\{fileFolderNames[^1]}");
-				Console.WriteLine("Built!");
-			}
-		}
-        
-    }
 	internal static string RemoveLingeringSlashes(string input)
 	{
 		if (input.EndsWith(@"\"))

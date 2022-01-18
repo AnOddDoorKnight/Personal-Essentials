@@ -1,32 +1,5 @@
 ﻿using System;
 using System.IO;
-namespace OddsLibrary.Name
-{
-	public static partial class Generate
-	{
-		public static string Name() => DelegateName();
-
-
-
-
-		private delegate string DelName();
-		// This should allow the person to get a name, using delegates save some efficiency instead of using if statements
-		private static DelName DelegateName = PrimaryName; 
-
-		private const string filePath = @"C:\Users\gooey\OneDrive\Work\Coding Work\The Odder Server Projects\ClassLibrary1\Names\SampleNames.txt";
-		private static string PrimaryName()
-		{
-			try
-			{
-				string[] names = File.ReadAllLines(filePath);
-				return names[new Random().Next(names.Length - 1)];
-			}
-			catch (DirectoryNotFoundException) { DelegateName = SafeName; }
-			return SafeName();
-		}
-		private static string SafeName() => "Unnamed";
-	}
-}
 namespace OddsLibrary.Name.Fantasy
 {
 	/// <summary>
