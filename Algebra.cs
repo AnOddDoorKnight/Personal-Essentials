@@ -49,10 +49,18 @@ public struct Vertex
 		this.sqrtValue = sqrtValue;
 		this.remainder = remiander;
 	}
-	public Vector2 OriginPoint => new ((float)-sqrtValue, (float)remainder);
+	public VectorDynamic OriginPoint => new(new float[] { (float)-sqrtValue, (float)remainder });
 	#warning Not Implemented!
 	public Trinomial ToTrinomial() => throw new NotImplementedException();
 	public override string ToString() => 
 		$"{(multiplier == 1 ? "" : multiplier)}(x {(sqrtValue >= 0 ? "+" : "-")} " + 
 		$"{Math.Abs(sqrtValue)})^2 {(remainder >= 0 ? "+" : "-")} {Math.Abs(remainder)}";
+}
+public enum Nomial
+{
+	Constant, //ie 6 , Mono
+	Linear, //ie 2x + 6, Bi
+	Quadratic, //ie 2x^2 + 3x + 6, Tri
+	Cubic,
+	Quartic,
 }
