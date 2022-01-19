@@ -1,23 +1,33 @@
 using System;
 using System.IO;
 namespace OddsLibrary.Name;
-public class GenerateName
+public static class GenerateName
 {
-    #warning Be sure to include fantasy!
-    private delName DelegateName = Primary;
-    public string Generate() 
-    {
-        try { return DelegateName(); }
-        catch (DirectoryNotFoundException e) 
-            { DelegateName = Safe; Console.WriteLine(e + "\nUsing safe name from now on."); }
-        return Safe();
-    }
-    private virtual string Primary()
-    {
-        string[] names = File.ReadAllLines(filePath);
-	    return names[new Random().Next(names.Length - 1)];
-    }
-    private virtual string Safe() => "Unnamed";
-
-    private delegate string delName();
+#warning Be sure to include fantasy!
+	private static delName DelegateName = Primary;
+	public static string Generate()
+	{
+		return DelegateName();
+		return Safe();
+	}
+	private static string Primary() => sampleNames[new Random().Next(sampleNames.Length - 1)];
+	private static string Safe() => "Unnamed";
+	private delegate string delName();
+	private static readonly string[] sampleNames =
+	{
+		"Tom",
+		"Bob",
+		"Bobby",
+		"Johnny",
+		"Macoe",
+		"Wolfie",
+		"Samthony",
+		"Anthosam",
+		"Jagger",
+		"Jabadamazo",
+		"Venesuela",
+		"Johnson",
+		"Bonny",
+		"Maxie",
+	};
 }

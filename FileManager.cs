@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System;
+using System.Threading.Tasks;
 namespace OddsLibrary.IO;
 public class FileManager
 {
@@ -12,14 +13,12 @@ public class FileManager
 		this.filePath = filePath;
 		directories = RemoveLingeringSlashes(filePath).Split(@"\");
 	}
-	public bool ReadFile(bool buildFileIfDoesntExist)
+	public string[] ReadFile()
 	{
-		if (!isFile) throw new ArgumentException("This is for files only!");
-		if (File.Exists(fileLocation)) return true;
-		else if (!buildFileIfDoesntExist) return false;
+		if (File.Exists(filePath)) return File.ReadAllLines(filePath);
 		BuildFile();
-		File.Create($@"{directory}\{fileFolderNames[^1]}");
-		return true;
+		File.Create(filePath);
+		return Array.Empty<string>();
 	}
 	public Task BuildPath()
 	{
@@ -37,10 +36,10 @@ public class FileManager
 		if (!isFile) throw new ArgumentException("This is for files only!");
 		if (File.Exists(filePath)) return Task.CompletedTask;
 		string directoryForFile = "";
-		for (int i = 0; i < fileFolderNames.Length - 1; i++)
-			directory += $@"{fileFolderNames[i]}\";
+		for (int i = 0; i < directories.Length - 1; i++)
+			directoryForFile += $@"{directories[i]}\";
 		if (!Directory.Exists(directoryForFile)) BuildPath();
-		File.Create($@"{directory}\{fileFolderNames[^1]}");
+		File.Create($@"{directoryForFile}\{directories[^1]}");
 		return Task.CompletedTask;
 	}
 	internal static string RemoveLingeringSlashes(string input)
