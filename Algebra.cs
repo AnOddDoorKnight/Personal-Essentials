@@ -1,5 +1,6 @@
 ﻿using OddsLibrary.Vector;
 using System;
+using System.Collections.Generic;
 namespace OddsLibrary.Algebra;
 
 // Rename namespace and class to Algebra
@@ -21,6 +22,7 @@ public static class Algebra
 		else if (value > maxHealth) value = maxHealth;
 		return true;
 	}
+	public static T GetRandomInArray<T>(T[] TValues) => TValues[new Random().Next(TValues.Length)];
 }
 public struct Trinomial
 {
