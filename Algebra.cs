@@ -24,11 +24,12 @@ public static class Algebra
 	}
 	public static T GetRandom<T>(T[] TValues) => TValues[new Random().Next(TValues.Length)];
 	public static T GetRandom<T>(List<T> TValues) => GetRandom(TValues.ToArray());
-	public static T2 GetRandom<TKeys, TValues>(Dictionary<TKeys, T2> TDictValues) 
+	public static TValues GetRandom<TKeys, TValues>(Dictionary<TKeys, TValues> TDictValues) where TKeys : notnull
 	{ 
-		TValues[] T2Array = null; 
-		TDictValues.Values.CopyTo(T2Array, 0); 
-		return GetRandom(T2Array); 
+		List<TValues> T2List = new();
+		foreach (TValues value in TDictValues.Values)
+			T2List.Add(value);
+		return GetRandom(T2List.ToArray()); 
 	}
 }
 public struct Trinomial
@@ -63,12 +64,4 @@ public struct Vertex
 	public override string ToString() => 
 		$"{(multiplier == 1 ? "" : multiplier)}(x {(sqrtValue >= 0 ? "+" : "-")} " + 
 		$"{Math.Abs(sqrtValue)})^2 {(remainder >= 0 ? "+" : "-")} {Math.Abs(remainder)}";
-}
-public enum Nomial
-{
-	Constant, //ie 6 , Mono
-	Linear, //ie 2x + 6, Bi
-	Quadratic, //ie 2x^2 + 3x + 6, Tri
-	Cubic,
-	Quartic,
 }

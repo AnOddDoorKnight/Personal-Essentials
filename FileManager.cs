@@ -7,11 +7,11 @@ public class FileManager
 	public readonly bool isFile;
 	public readonly string filePath;
 	public readonly string[] directories;
-	public FileManager(string filePath, bool isFile = false)
+	public FileManager(string filePath)
 	{
-		this.isFile = isFile;
 		this.filePath = filePath;
 		directories = RemoveLingeringSlashes(filePath).Split(@"\");
+		isFile = File.Exists(filePath);
 	}
 	public string[] ReadFile()
 	{
@@ -33,7 +33,7 @@ public class FileManager
 	public void BuildFile()
 	{
 		if (!isFile) throw new ArgumentException("This is for files only!");
-		if (File.Exists(filePath)) return Task.CompletedTask;
+		if (File.Exists(filePath)) return;
 		string directoryForFile = "";
 		for (int i = 0; i < directories.Length - 1; i++)
 			directoryForFile += $@"{directories[i]}\";
