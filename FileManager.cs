@@ -20,7 +20,7 @@ public class FileManager
 		File.Create(filePath);
 		return Array.Empty<string>();
 	}
-	public Task BuildPath()
+	public void BuildPath()
 	{
 		string forEachLine = "";
 		for (int i = 0; i < directories.Length; i++)
@@ -29,9 +29,8 @@ public class FileManager
 				Directory.CreateDirectory(forEachLine + directories[i]);
 			forEachLine += directories[i] + @"\";
 		}
-		return Task.CompletedTask;
 	}
-	public Task BuildFile()
+	public void BuildFile()
 	{
 		if (!isFile) throw new ArgumentException("This is for files only!");
 		if (File.Exists(filePath)) return Task.CompletedTask;
@@ -40,7 +39,6 @@ public class FileManager
 			directoryForFile += $@"{directories[i]}\";
 		if (!Directory.Exists(directoryForFile)) BuildPath();
 		File.Create($@"{directoryForFile}\{directories[^1]}");
-		return Task.CompletedTask;
 	}
 	internal static string RemoveLingeringSlashes(string input)
 	{

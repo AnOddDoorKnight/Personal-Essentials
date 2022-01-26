@@ -22,7 +22,14 @@ public static class Algebra
 		else if (value > maxHealth) value = maxHealth;
 		return true;
 	}
-	public static T GetRandomInArray<T>(T[] TValues) => TValues[new Random().Next(TValues.Length)];
+	public static T GetRandom<T>(T[] TValues) => TValues[new Random().Next(TValues.Length)];
+	public static T GetRandom<T>(List<T> TValues) => GetRandom(TValues.ToArray());
+	public static T2 GetRandom<TKeys, TValues>(Dictionary<TKeys, T2> TDictValues) 
+	{ 
+		TValues[] T2Array = null; 
+		TDictValues.Values.CopyTo(T2Array, 0); 
+		return GetRandom(T2Array); 
+	}
 }
 public struct Trinomial
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace OddsLibrary.Vector;
 
-public struct VectorDynamic
+public class VectorDynamic
 {
 	public float[] values;
 	public int Length => values.Length;
