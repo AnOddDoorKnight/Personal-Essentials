@@ -65,15 +65,15 @@ public abstract class Graph
 	public virtual string BaseString() => base.ToString()!;
 	public static dynamic Convert<T>(Graph graph) where T : Graph
 	{
-		Type type = typeof(T), barGraph = graph.GetType();
+		Type barGraph = graph.GetType();
 		string ofTypeString = barGraph.ToString();
 		List<double> vars = new();
 		foreach (GraphLine i in graph.Data) vars.Add(i.Value);
-		switch (ofTypeString)
+		return ofTypeString switch
 		{
-			case "BarGraph": return new BarGraph(vars.ToArray(), graph.HeightLength);
-			case "PointGraph": return new PointGraph(vars.ToArray(), graph.HeightLength);
-			default: throw new NotImplementedException();
-		}
+			"BarGraph" => new BarGraph(vars.ToArray(), graph.HeightLength),
+			"PointGraph" => new PointGraph(vars.ToArray(), graph.HeightLength),
+			_ => throw new NotImplementedException(),
+		};
 	}
 }
