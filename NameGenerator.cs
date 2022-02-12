@@ -32,7 +32,7 @@ public static class Names
 	{
 		chance = Algebra.Algebra.LimitValue(chance, 0, 1);
 		string[] vs;
-		if (new Random().NextDouble() > chance) // Exotic
+		if (new System.Random().NextDouble() > chance) // Exotic
 			vs = new string[]
 			{
 				"Name",

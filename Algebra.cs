@@ -22,7 +22,7 @@ public static class Algebra
 		else if (value > maxHealth) value = maxHealth;
 		return true;
 	}
-	public static T GetRandom<T>(T[] TValues) => TValues[new Random().Next(TValues.Length)];
+	public static T GetRandom<T>(T[] TValues) => TValues[new System.Random().Next(TValues.Length)];
 	public static T GetRandom<T>(List<T> TValues) => GetRandom(TValues.ToArray());
 	public static TValues GetRandom<TKeys, TValues>(Dictionary<TKeys, TValues> TDictValues) where TKeys : notnull
 	{ 
