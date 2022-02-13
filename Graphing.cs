@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 namespace OddsLibrary.Graphing;
-public abstract class Graph
+public class Graph
 {
+	// Fields
 	public List<GraphLine> Data = new();
 	private uint _heightL;
+	// Properties
 	public uint HeightLength { get => _heightL; set { _heightL = value; Update(); } }
+	public double[] AmountPerLengthPoint { get; private set; } = Array.Empty<double>();
 	// Constructors
 	public Graph(double[]? values = null, uint height = 10) 
 	{ 
@@ -48,7 +51,6 @@ public abstract class Graph
 		for (int i = 1; i < AmountPerLengthPoint.Length; i++)
 			AmountPerLengthPoint[i] = (height / HeightLength) * i + smallest;
 	}
-	public double[] AmountPerLengthPoint { get; private set; } = Array.Empty<double>();
 	protected void Sort()
 	{
 		double[] values = new double[Data.Count];
@@ -56,24 +58,48 @@ public abstract class Graph
 		Array.Sort(values);
 		for (int i = 0; i < values.Length; i++) Data[i] = new GraphLine(values[i], null);
 	}
+	// Returning Data Values
 	public override string ToString()
 	{
-		string output = "Using Default String...\n";
+		string output = "";
 		foreach (GraphLine i in Data) output += $"{i}\n";
 		return output;
 	}
 	public virtual string BaseString() => base.ToString()!;
-	public static dynamic Convert<T>(Graph graph) where T : Graph
+	public string AsBarGraph()
 	{
-		Type barGraph = graph.GetType();
-		string ofTypeString = barGraph.ToString();
-		List<double> vars = new();
-		foreach (GraphLine i in graph.Data) vars.Add(i.Value);
-		return ofTypeString switch
+		if (Data.Count < 2) return BaseString();
+		string output = "", lineReadonly = "{0}) ", line;
+		byte outLength = (byte)(Math.Truncate(AmountPerLengthPoint[^1]).ToString().Length + lineReadonly.Replace("{0}", "").Length);
+		for (uint i = HeightLength; i > 0; i--)
 		{
-			"BarGraph" => new BarGraph(vars.ToArray(), graph.HeightLength),
-			"PointGraph" => new PointGraph(vars.ToArray(), graph.HeightLength),
-			_ => throw new NotImplementedException(),
-		};
+			//Use Amount Per Length Point
+			line = lineReadonly.Replace("{0}", Math.Truncate(AmountPerLengthPoint[i]).ToString());
+			while (line.Length < outLength)
+				line += " ";
+			for (int ii = 0; ii < Data.Count; ii++)
+				line += $".{(Data[ii].Length >= i ? "#" : ".")}";
+			output += $"{line}\n";
+		}
+		line = lineReadonly.Replace("{0}", Math.Round(AmountPerLengthPoint[0]).ToString()); //
+		while (line.Length < outLength)
+			line += " ";
+		output += line;
+		for (uint i = (uint)Data.Count; i > 0; i--)
+			output += " T";
+		return output;
 	}
+}
+public struct GraphLine
+{
+	public double Value;
+	public uint? Length;
+	public string? name;
+	public GraphLine(double value, uint? length, string? name = null)
+	{
+		Value = value;
+		Length = length;
+		this.name = name;
+	}
+	public override string ToString() => $"Value: {Value}, Length: {(Length == null ? "Null" : Length)}";
 }
