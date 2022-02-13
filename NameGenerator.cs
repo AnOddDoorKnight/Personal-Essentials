@@ -3,7 +3,10 @@ using System.IO;
 namespace OddsLibrary;
 public static class Names
 {
-	// "Undefined Von Nullerson"
+	// "Undefined Von Nullerson"	
+	/// <summary>
+	/// Gets this instance.
+	/// </summary>
 	public static string Get() => Algebra.Algebra.GetRandom(sampleNames);
 	private static readonly string[] sampleNames =
 	{
