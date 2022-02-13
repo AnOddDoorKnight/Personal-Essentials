@@ -81,7 +81,7 @@ public class Graph
 				line += $".{(Data[ii].Length >= i ? "#" : ".")}";
 			output += $"{line}\n";
 		}
-		line = lineReadonly.Replace("{0}", Math.Round(AmountPerLengthPoint[0]).ToString()); //
+		line = lineReadonly.Replace("{0}", Math.Round(AmountPerLengthPoint[0]).ToString()); 
 		while (line.Length < outLength)
 			line += " ";
 		output += line;
