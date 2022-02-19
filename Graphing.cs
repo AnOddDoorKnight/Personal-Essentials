@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 namespace OddsLibrary.Graphing;
 public class Graph
 {
 	// Fields
 	public List<GraphLine> Data = new();
 	private uint _heightL;
+	public readonly bool doTruncate;
 	// Properties
 	public uint HeightLength { get => _heightL; set { _heightL = value; Update(); } }
 	public double[] AmountPerLengthPoint { get; private set; } = Array.Empty<double>();
 	// Constructors
-	public Graph(double[]? values = null, uint height = 10) 
-	{ 
+	public Graph(double[]? values = null, uint height = 10, bool doTruncate = true) 
+	{
+		this.doTruncate = doTruncate;
 		_heightL = height; 
 		if (values != null) foreach (int i in values) Data.Add(new GraphLine(i, null));
 		Update();
@@ -43,8 +44,8 @@ public class Graph
 		double percentagePerPoint = 1d / height;
 		// It starts at smallest instead of zero, hence height
 		for (int i = 1; i < Data.Count - 1; i++)
-			#warning TODO: ALlow Round or Truncate determined by the user
-			Data[i] = new GraphLine(Data[i].Value, (uint)Math.Round((accountedValues[i] / (double)height) * HeightLength));
+			Data[i] = doTruncate ? new GraphLine(Data[i].Value, (uint)Math.Truncate((accountedValues[i] / (double)height) * HeightLength))
+				: new GraphLine(Data[i].Value, (uint)Math.Round((accountedValues[i] / (double)height) * HeightLength));
 		// Allowing GetPerLengthPoint to Work
 		AmountPerLengthPoint = new double[HeightLength + 2];
 		AmountPerLengthPoint[0] = smallest;
@@ -62,7 +63,12 @@ public class Graph
 	public override string ToString()
 	{
 		string output = "";
-		foreach (GraphLine i in Data) output += $"{i}\n";
+		for (int i = 0; i < Data.Count; i++)
+		{
+			GraphLine graph = Data[i];
+			output += $"{i + 1}. {graph}\n";
+		}
+
 		return output;
 	}
 	public virtual string BaseString() => base.ToString()!;
