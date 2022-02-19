@@ -22,7 +22,7 @@ public class TaxBase
 		leftOver = null;
 		return input;
 	}
-	public static float ApplyTaxes(float input, TaxBase[] taxPoints)
+	public static float ApplyTaxes(float input, params TaxBase[] taxPoints)
 	{
 		float output = 0;
 		float? leftOver = 0;

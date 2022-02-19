@@ -14,7 +14,7 @@ public class VectorDynamic
 	public int Length => values.Length;
 	public float this[int index] => values[index];
 	/// <summary>uses a <see cref="float"/>[] to determine length and values</summary>
-	public VectorDynamic(float[] values)
+	public VectorDynamic(params float[] values)
 	{
 		this.values = values;
 	}
