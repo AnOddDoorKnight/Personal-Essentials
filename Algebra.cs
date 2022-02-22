@@ -34,6 +34,34 @@ public static class Algebra
 		return GetRandom(T2List.ToArray()); 
 	}
 }
+public struct Polynomial
+{
+	public double this[int index] => data[index];
+	private double[] data;
+	public readonly PolynomialType type;
+	public Polynomial(params double[] data)
+	{
+		this.data = data;
+		type = data.Length < 1 ? throw new ArgumentNullException(data.ToString()) : 
+			data.Length >= (int)PolynomialType.Over ? PolynomialType.Over : 
+			(PolynomialType)data.Length;
+	}
+	public override string ToString()
+	{
+		string output = string.Empty;
+		for (int i = data.Length; i > 0; i--)
+			output += $"{data[i]}^{(i != 1 ? i.ToString() : "")} {(data[i] < 0 ? "-" : "+")} ";
+		return output;
+	}
+}
+public enum PolynomialType : byte
+{
+	Monomial,
+	Binomial,
+	Trinomial,
+	Quadnomial,
+	Over,
+}
 public struct Trinomial
 {
 	public double xCubic, xSquared, x;
