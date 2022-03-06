@@ -29,5 +29,6 @@ public class Card
 		isCredit = Random.Next(0, 2) == 0;
 		securityNumber = (ushort)Random.Next(100, 1000);
 	}
-	public override string ToString() => $"{(isCredit ? "Credit" : "Debit")} Card: {credit} {securityNumber}\nExpiration Date: {expirationDate}\n";
+	public override string ToString() => $"{(isCredit ? "Credit" : "Debit")} " + 
+		$"Card: {credit} {securityNumber}\nExpiration Date: {expirationDate}\n";
 }

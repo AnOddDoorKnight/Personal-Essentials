@@ -2,14 +2,16 @@
 using System;
 namespace OddsLibrary.IO;
 /// <summary>
-/// Holds the path of the <see cref="File"/>/<see cref="Directory"/> for creation and easy manipulation
+/// Holds the path of the <see cref="File"/>/<see cref="Directory"/> 
+/// for creation and easy manipulation
 /// </summary>
 public class FileManager
 {
 	public readonly bool isFile;
 	public readonly string filePath;
 	public readonly string[] directories;
-	/// <summary>Assigns the <see cref="File"/>/<see cref="Directory"/> for modification</summary>
+	/// <summary>Assigns the <see cref="File"/>/<see cref="Directory"/> 
+	/// for modification</summary>
 	/// <param name="filePath">The file path.</param>
 	public FileManager(string filePath)
 	{
@@ -18,8 +20,8 @@ public class FileManager
 		isFile = File.Exists(filePath);
 	}
 	/// <summary>
-	/// Returns a <see cref="File.ReadAllLines(string)"/>, but creates an empty file if it doesn't exist
-	/// </summary>
+	/// Returns a <see cref="File.ReadAllLines(string)"/>, but creates an empty 
+	/// file if it doesn't exist</summary>
 	/// <returns><see cref="string"/>[] of the file's contents</returns>
 	public string[] ReadFile()
 	{

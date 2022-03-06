@@ -10,7 +10,8 @@ public static class Algebra
 	/// <param name="input">The input.</param>
 	/// <param name="min">The minimum.</param>
 	/// <param name="max">The maximum.</param>
-	public static double LimitValue(double input, double min, double max) => input < min ? min : input > max ? max : input;
+	public static double LimitValue(double input, double min, double max) 
+		=> input < min ? min : input > max ? max : input;
 	public static bool HealthManager(ref double value, in double maxHealth, in double deathPoint = 0)
 	{
 		if (value <= deathPoint)
@@ -22,11 +23,13 @@ public static class Algebra
 		return true;
 	}
 	/// <summary> Gets a random item in an array</summary>
-	public static T GetRandom<T>(T[] TValues) => TValues[new System.Random().Next(TValues.Length)];
+	public static T GetRandom<T>(T[] TValues) 
+		=> TValues[new System.Random().Next(TValues.Length)];
 	/// <summary>Gets a random item in the list</summary>>
 	public static T GetRandom<T>(List<T> TValues) => GetRandom(TValues.ToArray());
 	/// <summary>Gets a random item in the dictionary</summary>
-	public static TValues GetRandom<TKeys, TValues>(Dictionary<TKeys, TValues> TDictValues) where TKeys : notnull
+	public static TValues GetRandom<TKeys, TValues>
+		(Dictionary<TKeys, TValues> TDictValues) where TKeys : notnull
 	{ 
 		List<TValues> T2List = new();
 		foreach (TValues value in TDictValues.Values)

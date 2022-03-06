@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 namespace OddsLibrary.Vector;
 
-/// <summary>
-/// Class which holds an array of values for game design and geometry
-/// </summary>
+/// <summary>Class which holds an array of values for game design and geometry</summary>
 public class VectorDynamic
 {
 	public float[] values;
-	/// <value>
-	/// dimensions of vector
-	/// </value>
+	/// <value>dimensions of vector</value>
 	public int Length => values.Length;
 	public float this[int index] => values[index];
 	/// <summary>uses a <see cref="float"/>[] to determine length and values</summary>
@@ -24,12 +20,17 @@ public class VectorDynamic
 		foreach (float i in values) returnString += $"{i}, ";
 		return returnString.TrimEnd().Remove(returnString.LastIndexOf(','));
 	}
-	/// <summary>Like <see cref="DistanceBetween(VectorDynamic)"/>, but returns <see cref="float"/>[] with the distance</summary>
-	/// <exception cref="InvalidOperationException">Length does not match the compared vector</exception>
+	/// <summary>Like <see cref="DistanceBetween(VectorDynamic)"/>, 
+	/// but returns <see cref="float"/>[] with the distance</summary>
+	/// <exception cref="InvalidOperationException">
+	/// Length does not match the compared vector</exception>
+	/// <returns><see cref="float"/>[] with the distance</returns>
 	public float[] DistanceBetweenInArray(VectorDynamic vect)
 	{
 		List<float> foo = new();
-		if (Length != vect.Length) throw new InvalidOperationException("Length does not match the compared vector");
+		if (Length != vect.Length) 
+			throw new InvalidOperationException
+				("Length does not match the compared vector");
 		for (int i = 0; i < Length; i++)
 			foo.Add((float)Math.Abs(this[i] - vect[i]));
 		return foo.ToArray();

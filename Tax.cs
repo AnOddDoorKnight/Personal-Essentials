@@ -4,8 +4,12 @@ public class TaxBase
 {
 	public float? maxTax;
 	private float _taxingPercent;
-	public float TaxingPercent { get => _taxingPercent; set => _taxingPercent = value > 1 ? 1 : value < 0 ? 0 : value; }
-	public TaxBase() { }
+	public float TaxingPercent 
+	{ 
+		get => _taxingPercent; 
+		set => _taxingPercent = value > 1 ? 1 : value < 0 ? 0 : value; 
+	}
+	public TaxBase() {}
 	public TaxBase(float? maxTax, float taxingPercent) : this()
 	{
 		this.maxTax = maxTax;
@@ -38,9 +42,11 @@ public class TaxBase
 public class Tax : TaxBase
 {
 	public float Value;
-	public Tax(float Value, float? maxTax, float taxingPercent) : base(maxTax, taxingPercent)
+	public Tax(float Value, float? maxTax, float taxingPercent) 
+		: base(maxTax, taxingPercent)
 	{
 		this.Value = Value;
 	}
-	public float CalculateTaxPoint(out float? leftOver) => CalculateTaxPoint(Value, out leftOver);
+	public float CalculateTaxPoint(out float? leftOver) => 
+		CalculateTaxPoint(Value, out leftOver);
 }
